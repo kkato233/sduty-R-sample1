@@ -4,14 +4,19 @@ dotnet と R の得意分野を組み合わせてデータを解析します。
 dotnet : フォルダの中から ファイルを探してそのファイルサイズを取得
 R : ヒストグラムを表示
 
+`R.NET` を使って dotnet から 直接 R を実行します。
+
 ### 手順
 
 ```
 dotnet new console
+dotnet add package R.NET
 ```
 
 dotnet の コード （指定のフォルダにあるファイルのサイズを求める）
 ```
+using RDotNet;
+
 static void Main(string[] args)
 {
     // 指定ディレクトリにあるファイルのサイズ一覧
@@ -59,6 +64,7 @@ Rscript view.R file_size_info.tsv
 
 
 パスが通ってなくて Rscript が起動できない場合
+
 Windows の場合
 ```
 set PATH="C:\Program Files\R\R-4.0.0\bin";%PATH%
