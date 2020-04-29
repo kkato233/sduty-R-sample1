@@ -1,10 +1,16 @@
-## dotnet で データ解析した後で R のグラフを作成する
+## dotnet で データを前処理した後で R でグラフを作る
+dotnet と R の得意分野を組み合わせてデータを解析します。
+
+dotnet : フォルダの中から ファイルを探してそのファイルサイズを取得
+R : ヒストグラムを表示
+
+### 手順
 
 ```
 dotnet new console
 ```
 
-データを解析して テキストファイルにするプログラムを書く
+dotnet の コード （指定のフォルダにあるファイルのサイズを求める）
 ```
 static void Main(string[] args)
 {
@@ -23,6 +29,23 @@ static void Main(string[] args)
 }
 ```
 
+R でヒストグラムを作成する
+```
+# 入力パラメータをファイル名とする
+args <- commandArgs(trailingOnly = TRUE)
+file_name <- args[1];
+
+print(file_name)
+
+# 先頭をタイトルとして解析
+file_size_info <- read.delim(file_name, row.names = 1)
+
+png("info.png", 640, 640)
+hist(file_size_info$FileLength, breaks = 30)
+dev.off()
+```
+
+コマンドプロンプトで 以下を実施
 ```
 dotnet run > file_size_info.tsv
 Rscript view.R file_size_info.tsv
